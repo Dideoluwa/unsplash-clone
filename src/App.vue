@@ -8,7 +8,7 @@
         Search Result for <span>"{{ queryValue }}"</span>
       </h2>
 
-      <h2 class="search-title" v-if="isLoading">
+      <h2 class="search-title" v-if="isLoading && queryValue !== null">
         Searching for <span>"{{ queryValue }}"</span>
       </h2>
 
@@ -152,8 +152,8 @@ body {
   gap: 65px;
   background: linear-gradient(
     to bottom,
-    $header-color 340px,
-    $body-background-color 340px
+    $header-color 335px,
+    $body-background-color 335px
   );
   min-height: 100vh;
 
