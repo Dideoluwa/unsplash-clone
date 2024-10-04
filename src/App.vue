@@ -169,6 +169,7 @@ body {
 
     @media only screen and (max-width: 920px) {
       font-size: 24px;
+      width: 100%;
     }
   }
 
