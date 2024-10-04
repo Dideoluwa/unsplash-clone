@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <meta
+      property="og:title"
+      content="Unsplash Clone: Cowrywise Frontend Engineer Test"
+    />
+    <meta
+      property="og:description"
+      content="A clone of Unsplash, built for the Cowrywise Frontend Engineer Test"
+    />
+    <meta property="og:image" content="<%= BASE_URL %>icon.png" />
+    <meta
+      property="og:url"
+      content="https://darasimi-oni-unsplash-clone.vercel.app"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Unsplash Clone: Cowrywise Frontend Engineer Test"
+    />
+    <meta
+      name="twitter:description"
+      content="A clone of Unsplash, built for the Cowrywise Frontend Engineer Test"
+    />
+    <meta name="twitter:image" content="<%= BASE_URL %>icon.png" />
+    <title>Unsplash Clone: Cowrywise Frontend Engineer Test</title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
