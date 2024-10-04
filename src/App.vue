@@ -1,14 +1,27 @@
 <template>
   <div class="app">
-    <form class="input-wrapper" @submit.prevent="searchForImageHandler">
-      <div class="input">
+    <form class="input-wrapper" @submit.prevent="searchImageHandler">
+      <h2
+        class="search-title"
+        v-if="queryValue !== null && queryValue !== '' && !isLoading"
+      >
+        Search Result for <span>"{{ queryValue }}"</span>
+      </h2>
+
+      <h2 class="search-title" v-if="isLoading">
+        Searching for <span>"{{ queryValue }}"</span>
+      </h2>
+
+      <div class="input" v-else>
         <img src="./assets/searchIcon.svg" alt="search" />
 
-        <input placeholder="Search for photo" />
+        <input v-model="query" placeholder="Search for photo" />
       </div>
     </form>
 
-    <div class="unsplash-gallery">
+    <BaseLoader v-if="isLoading" />
+
+    <div v-else class="unsplash-gallery">
       <div class="image-grid">
         <div
           v-for="image in images"
@@ -40,21 +53,53 @@
 import { ref, onMounted } from "vue";
 import Api from "./utils/Api";
 import BaseModal from "./components/BaseModal.vue";
+import BaseLoader from "./components/BaseLoader.vue";
 
 const images = ref([]);
 const selectedImage = ref(null);
 const isModalOpen = ref(false);
+const query = ref("");
+const isLoading = ref(false);
 
-const fetchImages = async () => {
+const queryValue = ref(null);
+
+const fetchImages = async (query) => {
   try {
+    isLoading.value = true;
     const { data } = await Api.getUnsplashImages({
-      query: "african smile",
+      query: query,
       images_no: 8,
     });
     images.value = data.results;
-    console.log(data.results);
+    isLoading.value = false;
   } catch (error) {
-    this.$toast.error("Failed to fetch images:", error);
+    isLoading.value = false;
+
+    console.error("Failed to fetch images:", error);
+  }
+};
+
+const searchImageHandler = () => {
+  const queryParams = new URLSearchParams(window.location.search);
+  if (query.value !== "") {
+    queryParams.set("query", query.value);
+    window.history.pushState(
+      {},
+      "",
+      `${window.location.pathname}?${queryParams}`
+    );
+    const fetchedQuery = queryParams.get("query");
+    queryValue.value = fetchedQuery;
+    fetchImages(fetchedQuery);
+  } else {
+    queryValue.value = "";
+    queryParams.delete("query");
+    window.history.pushState(
+      {},
+      "",
+      `${window.location.pathname}?${queryParams}`
+    );
+    fetchImages("african smile");
   }
 };
 
@@ -69,7 +114,13 @@ const closeModal = () => {
 };
 
 onMounted(() => {
-  fetchImages();
+  const queryParams = new URLSearchParams(window.location.search);
+
+  const fetchedQuery = queryParams.get("query");
+
+  queryValue.value = fetchedQuery;
+
+  fetchImages(fetchedQuery || "african smile");
 });
 </script>
 
@@ -101,15 +152,33 @@ body {
   gap: 65px;
   background: linear-gradient(
     to bottom,
-    $header-color 280px,
-    $body-background-color 280px
+    $header-color 340px,
+    $body-background-color 340px
   );
   min-height: 100vh;
+
+  .search-title {
+    width: 1450px;
+    color: #2e3851;
+    font-size: 42px;
+    font-weight: 500;
+
+    span {
+      color: #727b8d;
+    }
+
+    @media only screen and (max-width: 920px) {
+      font-size: 24px;
+    }
+  }
 
   .input-wrapper {
     width: 1450px;
     padding: 0px 126px;
     margin-top: 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
     @media only screen and (max-width: 920px) {
       width: 100%;
