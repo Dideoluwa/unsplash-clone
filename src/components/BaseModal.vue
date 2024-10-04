@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay" @click.self="closeModal">
     <div class="modal-content">
-      <img :src="imageSrc?.urls?.raw" alt="Clicked image" />
+      <img :src="imageSrc?.urls?.regular" alt="Clicked image" />
       <div class="image-details">
         <p>{{ imageSrc?.user?.name }}</p>
         <p>{{ imageSrc?.user?.location }}</p>
@@ -91,6 +91,10 @@ export default defineComponent({
       padding: 45px 25px;
       align-items: flex-start;
       width: 100%;
+
+      @media only screen and (max-width: 920px) {
+        padding: 25px 10px;
+      }
       p {
         margin-bottom: 10px;
         &:first-child {

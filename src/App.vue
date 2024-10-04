@@ -17,7 +17,7 @@
           class="image-item"
         >
           <img
-            :src="image?.urls?.full"
+            :src="image?.urls?.regular"
             :alt="image?.alt_description"
             style="width: 100%; height: auto"
           />
@@ -108,12 +108,12 @@ body {
 
   .input-wrapper {
     width: 1450px;
-
     padding: 0px 126px;
     margin-top: 96px;
 
     @media only screen and (max-width: 920px) {
       width: 100%;
+      padding: 0px 26px;
     }
   }
 
@@ -122,6 +122,11 @@ body {
     .image-grid {
       columns: 3;
       column-gap: 32px;
+
+      @media only screen and (max-width: 920px) {
+        columns: 1;
+        column-gap: 32px;
+      }
 
       .image-item {
         width: 303px;
