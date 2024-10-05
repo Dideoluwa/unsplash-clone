@@ -1,13 +1,13 @@
 <template>
   <div class="modal-overlay" @click.self="closeModal">
-    <div class="modal-content">
+    <div class="modal-overlay-content">
       <img :src="imageSrc?.urls?.regular" alt="Clicked image" />
-      <div class="image-details">
+      <div class="modal-overlay-content-image-details">
         <p>{{ imageSrc?.user?.name }}</p>
         <p>{{ imageSrc?.user?.location }}</p>
       </div>
     </div>
-    <div @click="closeModal" class="close-button">
+    <div @click="closeModal" class="modal-overlay-close-button">
       <img src="../assets/close-icon.svg" alt="close" />
     </div>
   </div>
@@ -49,7 +49,7 @@ export default defineComponent({
   align-items: center;
   z-index: 1000;
 
-  .modal-content {
+  .modal-overlay-content {
     position: relative;
     padding: 20px;
     border-radius: 12px;
@@ -65,7 +65,7 @@ export default defineComponent({
       max-height: 95%;
     }
 
-    .image-details {
+    .modal-overlay-content-image-details {
       background: white;
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
@@ -106,7 +106,7 @@ export default defineComponent({
     }
   }
 
-  .close-button {
+  .modal-overlay-close-button {
     position: absolute;
     top: 20px;
     right: 30px;

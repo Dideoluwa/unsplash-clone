@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <form class="input-wrapper" @submit.prevent="searchImageHandler">
+    <form class="form" @submit.prevent="searchImageHandler">
       <h2
         class="search-title"
         v-if="queryValue !== null && queryValue !== '' && !isLoading"
@@ -21,26 +21,8 @@
 
     <BaseLoader v-if="isLoading" />
 
-    <div v-else class="unsplash-gallery">
-      <div class="image-grid">
-        <div
-          v-for="image in images"
-          @click="openModal(image)"
-          :key="image.id"
-          class="image-item"
-        >
-          <img
-            :src="image?.urls?.regular"
-            :alt="image?.alt_description"
-            style="width: 100%; height: auto"
-          />
-          <div class="image-overlay">
-            <p>{{ image?.user?.name }}</p>
-            <p>{{ image?.user?.location }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Gallery v-else :images="images" @open-modal="openModal" />
+
     <BaseModal
       v-if="isModalOpen"
       :imageSrc="selectedImage"
@@ -54,6 +36,7 @@ import { ref, onMounted } from "vue";
 import Api from "./utils/Api";
 import BaseModal from "./components/BaseModal.vue";
 import BaseLoader from "./components/BaseLoader.vue";
+import Gallery from "./components/Gallery.vue";
 
 const images = ref([]);
 const selectedImage = ref(null);
@@ -158,7 +141,7 @@ body {
   min-height: 100vh;
 
   .search-title {
-    width: 1450px;
+    width: 100%;
     color: #2e3851;
     font-size: 42px;
     font-weight: 500;
@@ -173,9 +156,9 @@ body {
     }
   }
 
-  .input-wrapper {
-    width: 1450px;
-    padding: 0px 126px;
+  .form {
+    width: 100%;
+    padding: 0px 96px;
     margin-top: 96px;
     display: flex;
     flex-direction: column;
@@ -184,70 +167,6 @@ body {
     @media only screen and (max-width: 920px) {
       width: 100%;
       padding: 0px 26px;
-    }
-  }
-
-  .unsplash-gallery {
-    margin-bottom: 50px;
-    .image-grid {
-      columns: 3;
-      column-gap: 32px;
-
-      @media only screen and (max-width: 920px) {
-        columns: 1;
-        column-gap: 32px;
-      }
-
-      .image-item {
-        width: 303px;
-        margin-bottom: 20px;
-        position: relative;
-        overflow: hidden;
-        min-height: 300px;
-        cursor: pointer;
-        border-radius: 12px;
-        transition: transform 0.5s ease;
-
-        &:hover {
-          transform: scale(0.95);
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-          min-height: 300px;
-
-          border-radius: 12px;
-          object-fit: cover;
-          z-index: 10;
-          transition: transform 0.5s ease;
-          &:hover {
-            transform: scale(1.12);
-          }
-        }
-
-        .image-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 98.9%;
-          border-radius: 12px;
-          background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.85));
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          color: white;
-          padding: 15px 20px;
-        }
-        .image-overlay p {
-          font-size: 20px;
-          margin-bottom: 10px;
-        }
-        .image-overlay p:last-child {
-          font-size: 16px;
-        }
-      }
     }
   }
 }

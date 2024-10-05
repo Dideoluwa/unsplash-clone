@@ -1,19 +1,15 @@
 <template>
   <div class="loading-container">
-    <div class="placeholder" v-for="n in 6" :key="n">
-      <div class="text-placeholder">
-        <div class="line"></div>
-        <div class="line shorter"></div>
+    <div class="loading-container-placeholder" v-for="n in 6" :key="n">
+      <div class="loading-container-text-placeholder">
+        <div class="loading-container-text-placeholder-line"></div>
+        <div class="loading-container-text-placeholder-line shorter"></div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "LoadingState",
-};
-</script>
+<script></script>
 
 <style lang="scss" scoped>
 .loading-container {
@@ -26,7 +22,7 @@ export default {
   }
 }
 
-.placeholder {
+.loading-container-placeholder {
   background-color: #f5f5f5;
   border-radius: 12px;
   padding: 16px;
@@ -84,21 +80,22 @@ export default {
   }
 }
 
-.text-placeholder {
+.loading-container-text-placeholder {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.text-placeholder .line {
+.loading-container-text-placeholder .loading-container-text-placeholder-line {
   height: 20px;
   background-color: #e0e0e0;
   border-radius: 4px;
   width: 80%;
 }
 
-.text-placeholder .line.shorter {
+.loading-container-text-placeholder
+  .loading-container-text-placeholder-line.shorter {
   width: 60%;
 }
 
