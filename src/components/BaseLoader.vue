@@ -17,8 +17,13 @@
   column-gap: 32px;
 
   @media only screen and (max-width: 920px) {
+    columns: 2;
+    column-gap: 24px;
+  }
+
+  @media only screen and (max-width: 540px) {
     columns: 1;
-    column-gap: 32px;
+    column-gap: 12px;
   }
 }
 

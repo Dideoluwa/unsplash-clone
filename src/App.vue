@@ -158,7 +158,10 @@ body {
 
   .form {
     width: 100%;
+    max-width: 1380px;
+    min-width: 400px;
     padding: 0px 96px;
+    margin: 0 auto;
     margin-top: 96px;
     display: flex;
     flex-direction: column;
