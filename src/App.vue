@@ -51,7 +51,7 @@ const fetchImages = async (query) => {
     isLoading.value = true;
     const { data } = await Api.getUnsplashImages({
       query: query,
-      images_no: 8,
+      images_no: queryValue.value !== null && queryValue.value !== "" ? 30 : 8,
     });
     images.value = data.results;
     isLoading.value = false;
@@ -82,7 +82,7 @@ const searchImageHandler = () => {
       "",
       `${window.location.pathname}?${queryParams}`
     );
-    fetchImages("african smile");
+    fetchImages("African");
   }
 };
 
@@ -103,7 +103,7 @@ onMounted(() => {
 
   queryValue.value = fetchedQuery;
 
-  fetchImages(fetchedQuery || "african smile");
+  fetchImages(fetchedQuery || "African");
 });
 </script>
 
