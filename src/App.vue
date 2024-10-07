@@ -2,13 +2,13 @@
   <div class="app">
     <form class="form" @submit.prevent="searchImageHandler">
       <h2
-        class="search-title"
+        class="form__search-title"
         v-if="queryValue !== null && queryValue !== '' && !isLoading"
       >
         Search Result for <span>"{{ queryValue }}"</span>
       </h2>
 
-      <h2 class="search-title" v-if="isLoading && queryValue !== null">
+      <h2 class="form__search-title" v-if="isLoading && queryValue !== null">
         Searching for <span>"{{ queryValue }}"</span>
       </h2>
 
@@ -33,12 +33,14 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useToast } from "vue-toast-notification";
 import Api from "./utils/Api";
 import BaseModal from "./components/BaseModal.vue";
 import BaseLoader from "./components/BaseLoader.vue";
 import Gallery from "./components/Gallery.vue";
 
 const images = ref([]);
+const toast = useToast();
 const selectedImage = ref(null);
 const isModalOpen = ref(false);
 const query = ref("");
@@ -57,8 +59,9 @@ const fetchImages = async (query) => {
     isLoading.value = false;
   } catch (error) {
     isLoading.value = false;
-
-    console.error("Failed to fetch images:", error);
+    toast.error("Failed to fetch images", {
+      position: "top-left",
+    });
   }
 };
 
@@ -140,32 +143,33 @@ body {
   );
   min-height: 100vh;
 
-  .search-title {
-    width: 100%;
-    color: #2e3851;
-    font-size: 42px;
-    font-weight: 500;
-
-    span {
-      color: #727b8d;
-    }
-
-    @media only screen and (max-width: 920px) {
-      font-size: 24px;
-      width: 100%;
-    }
-  }
-
   .form {
     width: 100%;
     max-width: 1380px;
     min-width: 400px;
+    min-height: 125px;
     padding: 0px 96px;
     margin: 0 auto;
     margin-top: 96px;
     display: flex;
     flex-direction: column;
     gap: 24px;
+
+    &__search-title {
+      width: 100%;
+      color: #2e3851;
+      font-size: 42px;
+      font-weight: 500;
+
+      span {
+        color: #727b8d;
+      }
+
+      @media only screen and (max-width: 920px) {
+        font-size: 24px;
+        width: 100%;
+      }
+    }
 
     @media only screen and (max-width: 920px) {
       width: 100%;

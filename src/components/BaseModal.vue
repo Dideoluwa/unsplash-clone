@@ -1,20 +1,26 @@
 <template>
   <div class="modal-overlay" @click.self="closeModal">
-    <div class="modal-overlay-content">
+    <div
+      class="modal-overlay__content"
+      :class="{
+        'modal-overlay__content--animate-fade-in': isModalOpen && !isFadingOut,
+        'modal-overlay__content--animate-fade-out': isFadingOut,
+      }"
+    >
       <img :src="imageSrc?.urls?.regular" alt="Clicked image" />
-      <div class="modal-overlay-content-image-details">
+      <div class="modal-overlay__content--image-details">
         <p>{{ imageSrc?.user?.name }}</p>
         <p>{{ imageSrc?.user?.location }}</p>
       </div>
     </div>
-    <div @click="closeModal" class="modal-overlay-close-button">
+    <div @click="closeModal" class="modal-overlay__close-button">
       <img src="../assets/close-icon.svg" alt="close" />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   props: {
@@ -25,11 +31,18 @@ export default defineComponent({
   },
   emits: ["close"],
   setup(props, { emit }) {
+    const isModalOpen = ref(true);
+    const isFadingOut = ref(false);
+
     const closeModal = () => {
-      emit("close");
+      isFadingOut.value = true;
+      setTimeout(() => {
+        emit("close");
+        isModalOpen.value = false;
+      }, 500);
     };
 
-    return { closeModal };
+    return { closeModal, isModalOpen, isFadingOut };
   },
 });
 </script>
@@ -49,7 +62,7 @@ export default defineComponent({
   align-items: center;
   z-index: 1000;
 
-  .modal-overlay-content {
+  &__content {
     position: relative;
     padding: 20px;
     border-radius: 12px;
@@ -65,7 +78,7 @@ export default defineComponent({
       max-height: 95%;
     }
 
-    .modal-overlay-content-image-details {
+    &--image-details {
       background: white;
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
@@ -106,7 +119,37 @@ export default defineComponent({
     }
   }
 
-  .modal-overlay-close-button {
+  &__content--animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  &__content--animate-fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  &__close-button {
     position: absolute;
     top: 20px;
     right: 30px;

@@ -1,10 +1,10 @@
 <template>
   <div class="gallery">
-    <div class="gallery-image-grid">
+    <div class="gallery__image-grid">
       <div
         v-for="image in images"
         :key="image.id"
-        class="gallery-image-grid-item"
+        class="gallery__image-grid--item"
         @click="openModal(image)"
       >
         <img
@@ -13,7 +13,7 @@
           style="width: 100%; height: auto"
         />
 
-        <div class="gallery-image-grid-item-overlay">
+        <div class="gallery__image-grid--item--overlay">
           <p>{{ image?.user?.name }}</p>
           <p>{{ image?.user?.location }}</p>
         </div>
@@ -49,7 +49,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .gallery {
   margin-bottom: 50px;
-  .gallery-image-grid {
+  &__image-grid {
     columns: 3;
     column-gap: 48px;
 
@@ -63,7 +63,7 @@ export default defineComponent({
       column-gap: 12px;
     }
 
-    .gallery-image-grid-item {
+    &--item {
       width: 283px;
       margin-bottom: 28px;
       position: relative;
@@ -87,7 +87,7 @@ export default defineComponent({
         transition: transform 0.5s ease;
       }
 
-      .gallery-image-grid-item-overlay {
+      &--overlay {
         position: absolute;
         top: 0;
         left: 0;
@@ -105,11 +105,11 @@ export default defineComponent({
       &:hover img {
         transform: scale(1.12);
       }
-      .gallery-image-grid-item-overlay p {
+      &--overlay p {
         font-size: 20px;
         margin-bottom: 10px;
       }
-      .gallery-image-grid-item-overlay p:last-child {
+      &--overlay p:last-child {
         font-size: 16px;
       }
     }
